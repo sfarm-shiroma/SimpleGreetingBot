@@ -1,0 +1,21 @@
+# Build artifacts
+bin/
+obj/
+
+# Publish output
+publish/
+
+# VS/VS Code
+.vs/
+*.user
+*.suo
+*.vscode/*
+!.vscode/extensions.json
+
+# Logs
+*.log
+
+# OS / editor
+*.swp
+*.DS_Store
+Thumbs.db
