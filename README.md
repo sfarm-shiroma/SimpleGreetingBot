@@ -22,6 +22,15 @@
 - 表示された URL の `/api/messages` を Bot Framework Emulator で開く
 - AppId/Password は空でOK（開発時）
 
+### 注意: トンネリング時の認証エラー（Azure Bot 側）
+Azure Bot（Bot Service）からローカル環境へトンネリング接続すると、Azure Bot 側で次のエラーが表示されることがあります。
+
+> There was an error sending this message to your bot: HTTP status code Unauthorized
+
+理由: チャネル→ボット間はトークン検証が前提で、ローカル匿名（未認証）とは整合しません。なお、Single-tenant/ユーザー割当MSI のアプリタイプは、Dev Tunnels と Emulator では非サポートです（参考: https://learn.microsoft.com/en-us/azure/bot-service/bot-service-quickstart-registration?view=azure-bot-service-4.0&utm_source=chatgpt.com&tabs=userassigned）。
+
+対処: ローカル以外（Web/Teams）から試す場合は、Azure App Service（Web Apps）等にデプロイし、`MicrosoftAppId/MicrosoftAppPassword/MicrosoftAppTenantId/MicrosoftAppType` を正しく構成してください（本READMEの「Azure へデプロイ」参照）。
+
 ## Azure へデプロイ（概要）
 1) App Service（.NET 8、Linux 推奨、B1 以上）を作成（Always On 推奨）
 2) Entra ID でアプリ登録 → AppId/Client Secret を取得
